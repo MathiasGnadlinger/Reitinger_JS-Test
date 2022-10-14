@@ -1,19 +1,41 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="https://vuejs.org/images/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <h3>Example</h3>
+    <form @submit.prevent="addNew">
+      <label> Enter new subject:</label>
+      <input v-model="newSubject" />
+      <button>Add subject</button>
+      <hr />
+    </form>
+    <ul>
+      <li v-for="item in subjectArray">
+        {{ item.content }}
+      </li>
+    </ul>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
+import { ref } from 'vue';
 export default {
-  name: 'App',
-  components: {
-    HelloWorld
-  }
-}
+  setup() {
+    const newSubject = ref('');
+    const subjectArray = ref([]);
+
+    function addNew() {
+      subjectArray.value.push({
+        content: newSubject.value,
+      });
+      console.log('newSubject');
+    }
+
+    return {
+      newSubject,
+      subjectArray,
+      addNew,
+    };
+  },
+};
 </script>
 
 <style>
